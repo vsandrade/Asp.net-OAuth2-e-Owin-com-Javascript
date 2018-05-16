@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <br />
+    <div class="container">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sign In</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" value="Fulano" placeholder="E-mail" id="email" type="email" autofocus="">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" value="1234" placeholder="Password" id="password" type="password" value="">
+                            </div>
+                            <!-- Change this to a button or input when using this as a form -->
+                            <a href="javascript:;" class="btn btn-sm btn-success" onclick="login()">Login</a>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <script>
+        function login(){
+            var name = document.getElementById('email').value;
+            var senha = document.getElementById('password').value;
+                    
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://localhost:50564/token', true);
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = function () {
+                var result = JSON.parse(this.responseText);
+
+                console.log(`${result.token_type} ${result.access_token}`);
+
+                sessionStorage.setItem("token", `${result.token_type} ${result.access_token}`);
+
+                verifica();
+            }
+
+            xhr.send(`grant_type=password&username=${name}&password=${senha}`);
+        }
+
+        function verifica() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:50564/api/Aluno', true);
+            xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('Authorization', `${sessionStorage.getItem('token')}`);
+
+            xhr.onload = function () {
+                var result = JSON.parse(this.responseText);
+
+                console.log(`${result}`);
+            }
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
