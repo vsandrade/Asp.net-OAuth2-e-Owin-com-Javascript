@@ -28,3 +28,7 @@ Então siga os passo abaixo para rodar os projetos ao mesmo tempo:
 2. Leia o codigo Javascript do index.HTML deste projeto, ele faz uma requisição simples.
 
 Enjoy!
+
+### No Youtube - Explicando o Código
+
+[![Link do Víde Explicativo](https://img.youtube.com/vi/S2Ryvw7ou3k/0.jpg)](https://www.youtube.com/watch?v=S2Ryvw7ou3k)
